@@ -7,10 +7,6 @@ import (
 
 // IsPangram determines whether or a string is a pangram or not
 func IsPangram(s string) bool {
-	if len(s) == 0 {
-		return false
-	}
-
 	alphabet := make(map[rune]int, 0)
 	for _, char := range s {
 		if unicode.IsLetter(char) {
