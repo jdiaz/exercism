@@ -7,12 +7,12 @@ import (
 )
 
 // Frequency is a map of words associated with the number of times they show up in a string.
-type Frequency = map[string]int
+type Frequency map[string]int
 
 // WordCount determines the ocurrance of each word in string.
 func WordCount(s string) Frequency {
-	freq := make(Frequency, 0)
-	buf := make([]rune, 0)
+	freq := Frequency{}
+	buf := []rune{}
 	for _, c := range strings.ToLower(s) {
 		if unicode.IsLetter(c) || c == '\'' || unicode.IsDigit(c) {
 			buf = append(buf, c)
@@ -26,7 +26,7 @@ func WordCount(s string) Frequency {
 				buf = buf[1 : n-1]
 			}
 			freq[string(buf)]++
-			buf = make([]rune, 0)
+			buf = []rune{}
 		}
 
 	}
