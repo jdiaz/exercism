@@ -31,9 +31,7 @@ func IsValidISBN(isbn string) bool {
 		} else {
 			digit = 10
 		}
-
 		acc += (10 - index) * digit
 	}
-
 	return acc%11 == 0
 }
