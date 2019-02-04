@@ -5,65 +5,55 @@ import (
 	"fmt"
 )
 
+const hourInDay = 24
+const minutesInHour = 60
+const minutesInDay = minutesInHour * hourInDay
+
 //Clock struct represents a time-only clock (hour, minutes)
 type Clock struct {
-	hour, minutes int
+	minutes int
 }
 
 // New initializes a clock with default hour and minutes values
-func New(hr, min int) Clock {
-	h, m := calculateTime(hr, min)
-	return Clock{hour: h, minutes: m}
+func New(hr, mnts int) Clock {
+	hr = hr % hourInDay
+	mnts = mnts % minutesInDay
+	if hr < 0 {
+		hr = hr + hourInDay
+	}
+	if mnts < 0 {
+		mnts = mnts + minutesInDay
+	}
+	minutes := hr * minutesInHour + mnts
+	if minutes >= minutesInDay {
+		minutes = minutes % minutesInDay
+	}
+	return Clock{minutes: minutes}
 }
 
 // String returns a string representation of the clock
 func (c Clock) String() string {
-	hour := "%d"
-	minutes := "%d"
-
-	if isSingleDigit(c.hour) {
-		hour = "0%d"
-	}
-
-	if isSingleDigit(c.minutes) {
-		minutes = "0%d"
-	}
-
-	return fmt.Sprintf(hour+":"+minutes, c.hour, c.minutes)
+	fmt.Println("=====")
+	fmt.Println(c.minutes)
+	hour := c.minutes / minutesInHour
+	minutes := c.minutes % minutesInHour
+	s := fmt.Sprintf("%02d:%02d", hour, minutes)
+	fmt.Println(s)
+	return s
 }
 
 // Add increments the time by the provides minutes amount
 func (c Clock) Add(minutes int) Clock {
-	h, m := calculateTime(c.hour, c.minutes+minutes)
-	c.hour = h
-	c.minutes = m
-	return c
+	newMinutes := c.minutes + minutes
+	h := newMinutes / minutesInHour
+	m := newMinutes % minutesInHour
+	return New(h, m)
 }
 
 // Subtract decreases the time by the provides minutes amount
 func (c Clock) Subtract(minutes int) Clock {
-	h, m := calculateTime(c.hour, c.minutes-minutes)
-	c.hour = h
-	c.minutes = m
-	return c
-}
-
-func calculateTime(hour, minutes int) (int, int) {
-	if hour < 0 {
-		hour = -24 - hour
-		hour = hour * -1
-		fmt.Println(hour)
-	}
-	if minutes < 0 {
-		minutes = -60 - minutes
-		minutes = minutes * -1
-		fmt.Println(minutes)
-	}
-
-	increment := minutes / 60
-	return (hour + increment) % 24, minutes % 60
-}
-
-func isSingleDigit(n int) bool {
-	return n/10 == 0
+	newMinutes := c.minutes - minutes
+	h := newMinutes / minutesInHour
+	m := newMinutes % minutesInHour
+	return New(h, m)
 }
