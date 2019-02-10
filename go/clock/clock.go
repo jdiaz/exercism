@@ -14,17 +14,10 @@ type Clock struct {
 
 // New initializes a clock with default hour and minutes values
 func New(hr, mnts int) Clock {
-	hr = hr % hourInDay
-	if hr < 0 {
-		hr = hr + hourInDay
-	}
-	mnts = mnts % minutesInDay
-	if mnts < 0 {
-		mnts = mnts + minutesInDay
-	}
 	minutes := hr*minutesInHour + mnts
-	if minutes >= minutesInDay {
-		minutes = minutes % minutesInDay
+	minutes = minutes % minutesInDay
+	if minutes < 0 {
+		minutes += minutesInDay
 	}
 	return Clock{minutes: minutes}
 }
@@ -38,16 +31,10 @@ func (c Clock) String() string {
 
 // Add increments the time by the provides minutes amount
 func (c Clock) Add(minutes int) Clock {
-	newMinutes := c.minutes + minutes
-	h := newMinutes / minutesInHour
-	m := newMinutes % minutesInHour
-	return New(h, m)
+	return New(0, c.minutes+minutes)
 }
 
 // Subtract decreases the time by the provides minutes amount
 func (c Clock) Subtract(minutes int) Clock {
-	newMinutes := c.minutes - minutes
-	h := newMinutes / minutesInHour
-	m := newMinutes % minutesInHour
-	return New(h, m)
+	return New(0, c.minutes-minutes)
 }
