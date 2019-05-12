@@ -48,8 +48,6 @@ func Build(records []Record) (*Node, error) {
 		var childNodePtr *Node
 		_, childExists := nodeMap[childID]
 		if childExists && rootSeen {
-			//childNodePtr = child
-			//fmt.Printf("who am  i? => %+v", nodeMap)
 			return nil, errors.New("Duplicate record")
 		} else if !childExists {
 			childNodePtr = &Node{ID: childID}
