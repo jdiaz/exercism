@@ -19,11 +19,11 @@ type DNA struct {
 // Here, the Counts method has a receiver of type DNA named d.
 func (d DNA) Counts() (Histogram, error) {
 
-	var h = Histogram {'A': 0, 'C': 0, 'G': 0, 'T': 0}
+	var h = Histogram{'A': 0, 'C': 0, 'G': 0, 'T': 0}
 
 	for _, c := range d.strand {
-		switch (c) {
-		case 'A','C','G','T':
+		switch c {
+		case 'A', 'C', 'G', 'T':
 			h[c]++
 		default:
 			return h, errors.New("Invalid DNA strand")
