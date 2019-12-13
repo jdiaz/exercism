@@ -20,10 +20,6 @@ type DNA struct {
 func (d DNA) Counts() (Histogram, error) {
 
 	var h = Histogram {'A': 0, 'C': 0, 'G': 0, 'T': 0}
-	
-	if len(d.strand) == 0 {
-		return h, nil
-	}
 
 	for _, c := range d.strand {
 		switch (c) {
