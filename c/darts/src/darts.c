@@ -1,5 +1,4 @@
 #include "darts.h"
-#include "math.h"
 
 #define OUTER_CIRCLE_RADIUS 10
 #define MIDDLE_CIRCLE_RADIUS 5
